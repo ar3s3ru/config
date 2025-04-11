@@ -16,7 +16,7 @@
     };
 
     brews = [
-      "podman"
+      "docker"
     ];
 
     casks = [

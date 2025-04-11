@@ -2,21 +2,12 @@
 let
   inherit (pkgs.vscode-utils) buildVscodeMarketplaceExtension;
 
-  bazelbuild.vscode-bazel = buildVscodeMarketplaceExtension {
-    mktplcRef = {
-      publisher = "bazelbuild";
-      name = "vscode-bazel";
-      version = "0.8.1";
-      sha256 = "VbFbFi77hTBJtXXI+jdp5l8wMIRx0UrXt5tXHs3xaDE=";
-    };
-  };
-
   bufbuild.vscode-buf = buildVscodeMarketplaceExtension {
     mktplcRef = {
       publisher = "bufbuild";
       name = "vscode-buf";
-      version = "0.5.3";
-      sha256 = "ZfwTj6S54H0ympdjc4/3xBwlvR7zg4vJ98gyVwL8ZRw=";
+      version = "0.7.0";
+      sha256 = "B5/Gc+f3xaYpMTXFcQ9LJiAb9LBJX2aR+gh22up3Wi4=";
     };
   };
 
@@ -24,8 +15,17 @@ let
     mktplcRef = {
       publisher = "fwcd";
       name = "kotlin";
-      version = "0.2.34";
-      sha256 = "03F6cHIA9Tx8IHbVswA8B58tB8aGd2iQi1i5+1e1p4k=";
+      version = "0.2.36";
+      sha256 = "tCpxFWSQZNhiHdJyxSbQ1QakS2jNqWQrA2/grLZklrM=";
+    };
+  };
+
+  mrmlnc.vscode-json5 = buildVscodeMarketplaceExtension {
+    mktplcRef = {
+      publisher = "mrmlnc";
+      name = "vscode-json5";
+      version = "1.0.0";
+      sha256 = "XJmlUuKiAWqzvT7tawVY5NHsnUL+hsAjJbrcmxDe8C0=";
     };
   };
 in
@@ -38,14 +38,21 @@ in
   ];
 
   programs.vscode.enable = true;
-  programs.vscode.mutableExtensionsDir = true;
+  programs.vscode.mutableExtensionsDir = false;
 
   programs.vscode.profiles.default.extensions = with pkgs.vscode-extensions; [
     ms-python.python
+    ms-python.pylint
+    ms-python.flake8
+    ms-python.black-formatter
+    ms-python.isort
+    github.copilot
+    github.copilot-chat
     tamasfe.even-better-toml
     eamodio.gitlens
     golang.go
     hashicorp.terraform
+    hashicorp.hcl
     jnoortheen.nix-ide
     mechatroner.rainbow-csv
     rust-lang.rust-analyzer
@@ -60,11 +67,13 @@ in
     jock.svg
     editorconfig.editorconfig
     jebbs.plantuml
-    # ms-vsliveshare.vsliveshare
+    mrmlnc.vscode-json5
+    bazelbuild.vscode-bazel
+    ms-vsliveshare.vsliveshare
     # Local derivation modules
     bufbuild.vscode-buf
-    bazelbuild.vscode-bazel
     fwcd.kotlin
+    mrmlnc.vscode-json5
   ];
 
   programs.vscode.profiles.default.userSettings = {
@@ -75,6 +84,7 @@ in
     "editor.suggestSelection" = "first";
     "files.insertFinalNewline" = true;
     "files.trimTrailingWhitespace" = true;
+
     "security.workspace.trust.untrustedFiles" = "open";
 
     # Golang configuration.
@@ -96,39 +106,28 @@ in
     };
 
     # Protobuf configuration.
-    "[proto]" = { "editor.defaultFormatter" = "bufbuild.vscode-buf"; };
-    "[proto3]" = { "editor.defaultFormatter" = "bufbuild.vscode-buf"; };
+    "[proto][proto3]" = {
+      "editor.defaultFormatter" = "bufbuild.vscode-buf";
+    };
 
     # Markdown configuration.
     "markdown.extension.toc.omittedFromToc" = { };
 
     # Nix configuration.
     "nix.enableLanguageServer" = true;
+    "nix.serverPath" = "nil";
+    "nix.serverSettings" = {
+      "nil" = {
+        "formatting" = {
+          "command" = [ "nixpkgs-fmt" ];
+        };
+      };
+    };
 
     # Configuration from ./hosts/default.nix
     "plantuml.server" = "http://127.0.0.1:10808";
     "plantuml.render" = "PlantUMLServer";
 
-    # These are for CloudFormation.
-    "yaml.customTags" = [
-      "!And"
-      "!If"
-      "!Not"
-      "!Equals"
-      "!Or"
-      "!FindInMap sequence"
-      "!Base64"
-      "!Cidr"
-      "!Ref"
-      "!Sub"
-      "!GetAtt"
-      "!GetAZs"
-      "!ImportValue"
-      "!Select"
-      "!Select sequence"
-      "!Split"
-      "!Join sequence"
-    ];
     "yaml.format.enable" = true;
   };
 }

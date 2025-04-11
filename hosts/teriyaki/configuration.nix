@@ -24,6 +24,7 @@
       plantuml
       graphviz
       unzip
+      colima
     ];
   };
 

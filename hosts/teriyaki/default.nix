@@ -25,6 +25,8 @@ darwin.lib.darwinSystem {
       home-manager.useUserPackages = true;
       home-manager.users.ar3s3ru = import ./user-ar3s3ru.nix;
 
+      home-manager.backupFileExtension = "bak";
+
       home-manager.extraSpecialArgs.inputs = inputs;
       home-manager.extraSpecialArgs.colorscheme = nix-colors.colorSchemes.monokai;
       home-manager.extraSpecialArgs.ssh.private-key = ./secrets/id_ed25519;
