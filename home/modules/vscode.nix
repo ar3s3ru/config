@@ -28,6 +28,24 @@ let
       sha256 = "XJmlUuKiAWqzvT7tawVY5NHsnUL+hsAjJbrcmxDe8C0=";
     };
   };
+
+  keesschollaart.vscode-home-assistant = buildVscodeMarketplaceExtension {
+    mktplcRef = {
+      publisher = "keesschollaart";
+      name = "vscode-home-assistant";
+      version = "1.43.0";
+      sha256 = "TFn3ZU36aWDmPHjPhIF4ZzD7cU7PeIjVj4vCpqu4kZg=";
+    };
+  };
+
+  a-h.templ = buildVscodeMarketplaceExtension {
+    mktplcRef = {
+      publisher = "a-h";
+      name = "templ";
+      version = "0.0.35";
+      sha256 = "WIBJorljcnoPUrQCo1eyFb6vQ5lcxV0i+QJlJdzZYE0=";
+    };
+  };
 in
 {
   # NOTE: many of the required packages here are acutally installed already in nvim module.
@@ -46,8 +64,6 @@ in
     ms-python.flake8
     ms-python.black-formatter
     ms-python.isort
-    github.copilot
-    github.copilot-chat
     tamasfe.even-better-toml
     eamodio.gitlens
     golang.go
@@ -71,9 +87,11 @@ in
     bazelbuild.vscode-bazel
     ms-vsliveshare.vsliveshare
     # Local derivation modules
+    keesschollaart.vscode-home-assistant
     bufbuild.vscode-buf
     fwcd.kotlin
     mrmlnc.vscode-json5
+    a-h.templ
   ];
 
   programs.vscode.profiles.default.userSettings = {
