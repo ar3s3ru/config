@@ -6,8 +6,6 @@
     nur.url = "github:nix-community/NUR";
     flake-utils.url = "github:numtide/flake-utils";
 
-    nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
-
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -23,19 +21,15 @@
 
     nixos-apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
     nixos-apple-silicon.inputs.nixpkgs.follows = "nixpkgs";
+
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs@{ flake-utils, nixpkgs, ... }: {
-    nixosConfigurations = {
-      momonoke = import ./hosts/momonoke inputs;
-      dejima = import ./hosts/dejima inputs;
-      terobaki = import ./hosts/terobaki inputs;
-      eq14-001 = import ./hosts/eq14-001 inputs;
-    };
-
     darwinConfigurations = {
-      teriyaki = import ./hosts/teriyaki inputs;
-      polus = import ./hosts/polus inputs;
+      teriyaki = import ./machines/teriyaki inputs;
+      polus = import ./machines/polus inputs;
     };
   } // (flake-utils.lib.eachDefaultSystem
     (system:
@@ -53,6 +47,7 @@
             unixtools.watch
             gnumake
             nil
+            sops
           ];
         };
       }));
