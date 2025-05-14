@@ -8,6 +8,7 @@ in
     ./gpg-darwin.nix
     ./user-picnic-aws.nix
     ./user-picnic-java.nix
+    ./user-picnic-kube.nix
     ./user-picnic-python.nix
   ];
 
@@ -24,5 +25,8 @@ in
     just # picnic-fca uses that for some projects.
     libxml2 # For xmllint.
     xmlstarlet
+    # For Tech Horizons
+    marp-cli
+    docker-compose
   ];
 }
