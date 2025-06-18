@@ -1,5 +1,3 @@
-{ ... }:
-
 {
   # Make Homebrew binaries runnable.
   environment.systemPath = [
@@ -16,7 +14,6 @@
     };
 
     brews = [
-      "podman"
       "awscli@2"
     ];
 
@@ -24,7 +21,6 @@
       "whatsapp"
       "stats"
       "firefox"
-      "podman-desktop"
     ];
   };
 }

@@ -7,6 +7,8 @@
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
 
+  nix.settings.trusted-users = [ "root" "ar3s3ru" "@wheel" ];
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment = {

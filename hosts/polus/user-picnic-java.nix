@@ -1,8 +1,15 @@
-{ lib, ... }:
+{ pkgs, lib, ... }:
 let
   nexusPassword = lib.strings.fileContents ./secrets/nexus-password;
 in
 {
+  programs.java.enable = true;
+  programs.java.package = pkgs.jdk21_headless;
+
+  home.packages = with pkgs; [
+    maven
+  ];
+
   programs.fish.shellAliases = {
     mvnc = "mvn --batch-mode --define surefire.timeout=300 --define rabbitmq.support-delays=false -Dstyle.color=always -Prelaxed-release\\$";
     mvni = "mvnc install";

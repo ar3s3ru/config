@@ -27,6 +27,5 @@ in
     xmlstarlet
     # For Tech Horizons
     marp-cli
-    docker-compose
   ];
 }

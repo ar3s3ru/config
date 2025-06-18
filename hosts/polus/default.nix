@@ -18,7 +18,7 @@ darwin.lib.darwinSystem {
     ../modules/aerospace.nix
     ./configuration.nix
     ./homebrew.nix
-    ./java.nix
+    ./docker.nix
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
