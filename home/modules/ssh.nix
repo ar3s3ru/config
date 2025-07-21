@@ -1,13 +1,10 @@
-{ config, pkgs, ssh, ... }:
-let
-  private-key-filename = builtins.baseNameOf ssh.private-key;
-  public-key-filename = builtins.baseNameOf ssh.public-key;
-in
+{ config, ssh, ... }:
+
 {
   programs.ssh = {
     enable = true;
   };
 
-  home.file.".ssh/${private-key-filename}".source = ssh.private-key;
-  home.file.".ssh/${public-key-filename}".source = ssh.public-key;
+  sops.secrets.id_ed25519.path = "${config.home.homeDirectory}/.ssh/id_ed25519";
+  home.file.".ssh/id_ed25519.pub".source = ssh.public-key;
 }

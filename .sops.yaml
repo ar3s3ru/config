@@ -1,0 +1,11 @@
+---
+keys:
+  - &ar3s3ru C8DAE39DAA00FF97
+  - &polus-age age1luwssgv4vw2ccysxtm4umvdt6zj0uc84w0dl8vjuue5893m9ydhq8rl7tc
+creation_rules:
+  - path_regex: "machines/.*/secrets.yaml"
+    key_groups:
+      - pgp:
+          - *ar3s3ru
+      - age:
+          - *polus-age

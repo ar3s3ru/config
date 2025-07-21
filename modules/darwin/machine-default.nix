@@ -2,31 +2,32 @@
 
 {
   system.stateVersion = 4;
+  ids.gids.nixbld = 350;
 
   # Set your time zone.
-  time.timeZone = "Europe/Berlin";
+  time.timeZone = "Europe/Amsterdam";
+
+  nix.settings.trusted-users = [ "root" "ar3s3ru" "@wheel" ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment = {
-    systemPackages = with pkgs; [
-      wget
-      ripgrep
-      # NOTE: git is also set up in Home Manager, but I'm keeping it here
-      # so that I can also clone stuff without having a configured user
-      # necessarily.
-      git
-      git-crypt
-      gopass
-      gopass-jsonapi
-      gnumake
-      killall
-      plantuml
-      graphviz
-      unzip
-      colima
-    ];
-  };
+  environment.systemPackages = with pkgs; [
+    wget
+    ripgrep
+    # NOTE: git is also set up in Home Manager, but I'm keeping it here
+    # so that I can also clone stuff without having a configured user
+    # necessarily.
+    git
+    git-crypt
+    gopass
+    gopass-jsonapi
+    gnumake
+    killall
+    plantuml
+    graphviz
+    unzip
+    colima
+  ];
 
   # Enable GnuPG Agent.
   # Please note, the actual agent config (e.g. pinentry)
@@ -48,11 +49,6 @@
     shell = "${pkgs.fish}/bin/fish";
   };
 
-  users.users.root = {
-    home = "/var/root";
-    shell = "${pkgs.fish}/bin/fish";
-  };
-
   environment.variables = {
     EDITOR = "nvim";
   };
@@ -65,8 +61,7 @@
   # };
 
   fonts.packages = with pkgs; [
-    terminus_font
-    terminus_font_ttf
+    nerd-fonts.meslo-lg
+    nerd-fonts.terminess-ttf
   ];
 }
-

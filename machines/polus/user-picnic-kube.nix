@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   home.packages = with pkgs; [
@@ -9,5 +9,5 @@
     helmfile
   ];
 
-  home.file.".kube/config".source = ./secrets/kubeconfig;
+  sops.secrets.kubeconfig.path = "${config.home.homeDirectory}/.kube/config";
 }

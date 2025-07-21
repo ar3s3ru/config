@@ -37,7 +37,7 @@ nixos:
 darwin:
 	$(NIX) build .#darwinConfigurations.$(host).system
 	echo "switching to new version..."
-	./result/sw/bin/darwin-rebuild switch --flake .
+	sudo ./result/sw/bin/darwin-rebuild switch --flake .
 	echo "all done!"
 
 system/teriyaki:

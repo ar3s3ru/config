@@ -1,7 +1,5 @@
-{ pkgs, lib, ... }:
-let
-  nexusPassword = lib.strings.fileContents ./secrets/nexus-password;
-in
+{ pkgs, config, ... }:
+
 {
   programs.java.enable = true;
   programs.java.package = pkgs.jdk21_headless;
@@ -15,13 +13,16 @@ in
     mvni = "mvnc install";
   };
 
-  home.sessionVariables."NEXUS_USERNAME" = "dcianfrone";
-  home.sessionVariables."NEXUS_PASSWORD" = nexusPassword;
+  sops.secrets.nexus-password = { };
 
-  home.file."maven-config" = {
-    executable = false;
-    target = ".m2/settings.xml";
-    source = ./secrets/picnic-maven-settings.xml;
+  home.sessionVariables."NEXUS_USERNAME" = "dcianfrone";
+  programs.fish.shellInit = ''
+    set -gx NEXUS_PASSWORD (cat ${config.sops.secrets.nexus-password.path})
+  '';
+
+  sops.secrets.maven-settings = {
+    mode = "0440";
+    path = "${config.home.homeDirectory}/.m2/settings.xml";
   };
 
   home.file."maven-jvm-config" = {

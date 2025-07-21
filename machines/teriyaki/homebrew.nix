@@ -1,5 +1,3 @@
-{ ... }:
-
 {
   # Make Homebrew binaries runnable.
   environment.systemPath = [

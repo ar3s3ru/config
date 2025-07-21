@@ -56,7 +56,7 @@ in
   ];
 
   programs.vscode.enable = true;
-  programs.vscode.mutableExtensionsDir = false;
+  programs.vscode.mutableExtensionsDir = true;
 
   programs.vscode.profiles.default.extensions = with pkgs.vscode-extensions; [
     ms-python.python
