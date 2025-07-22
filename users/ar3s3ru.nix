@@ -15,13 +15,13 @@
 
   imports = [
     inputs.nix-colors.homeManagerModule
-    ../modules/nvim
-    ../modules/alacritty.nix
-    ../modules/direnv.nix
-    ../modules/fish.nix
-    ../modules/git.nix
-    ../modules/ssh.nix
-    ../modules/vscode.nix
+    ../modules/home/nvim
+    ../modules/home/alacritty.nix
+    ../modules/home/direnv.nix
+    ../modules/home/fish.nix
+    ../modules/home/git.nix
+    ../modules/home/ssh.nix
+    ../modules/home/vscode.nix
   ];
 
   programs = {

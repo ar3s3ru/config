@@ -4,8 +4,8 @@ let
 in
 {
   imports = [
-    ../../home/ar3s3ru
     ../../modules/darwin/gpg.nix
+    ../../users/ar3s3ru.nix
   ];
 
   programs.alacritty.settings.font.normal.family = font;
