@@ -1,4 +1,4 @@
-{ lib, pkgs, inputs, ... }:
+{ lib, pkgs, inputs, config, ... }:
 
 {
   home.username = "ar3s3ru";
@@ -12,6 +12,12 @@
   nixpkgs.config.permittedInsecurePackages = [
     "python-2.7.18.7"
   ];
+
+  # Make sure that the secrets decryption happens through
+  # my private GPG key.
+  sops.gnupg.home = "${config.home.homeDirectory}/.gnupg";
+  sops.gnupg.sshKeyPaths = [ ];
+  sops.age.sshKeyPaths = [ ];
 
   imports = [
     inputs.nix-colors.homeManagerModule

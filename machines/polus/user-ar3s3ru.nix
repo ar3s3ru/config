@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, config, ... }:
 let
   font = "MesloLGSDZ Nerd Font";
 in
@@ -18,8 +18,6 @@ in
     "editor.fontFamily" = lib.mkForce "'${font}'";
     "editor.fontSize" = 14;
   };
-
-  sops.age.keyFile = "/Users/ar3s3ru/.config/sops/age/keys.txt";
 
   home.packages = with pkgs; [
     nodejs

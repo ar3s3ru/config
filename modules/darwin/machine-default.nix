@@ -1,10 +1,13 @@
 { pkgs, ... }:
 
 {
+  imports = [
+    ./sops.nix
+  ];
+
   system.stateVersion = 4;
   ids.gids.nixbld = 350;
 
-  # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
 
   nix.settings.trusted-users = [ "root" "ar3s3ru" "@wheel" ];
@@ -27,6 +30,10 @@
     graphviz
     unzip
     colima
+  ];
+
+  homebrew.brews = [
+    "bitwarden-cli" # Marked as broken in nixpkgs.
   ];
 
   # Enable GnuPG Agent.

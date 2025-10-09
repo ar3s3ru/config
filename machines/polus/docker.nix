@@ -1,5 +1,5 @@
 {
-  homebrew.brews = [ "docker" "colima" ];
+  homebrew.brews = [ "docker" "colima" "docker-compose" ];
 
   environment.variables = {
     DOCKER_HOST = "unix:///Users/ar3s3ru/.colima/docker.sock";
