@@ -26,5 +26,6 @@ in
     libxml2 # For xmllint
     xmlstarlet
     marp-cli # For Tech Horizons
+    claude-code
   ];
 }
