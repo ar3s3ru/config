@@ -15,6 +15,7 @@
 
     brews = [
       "awscli@2"
+      "poetry"
     ];
 
     casks = [

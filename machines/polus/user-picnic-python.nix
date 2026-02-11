@@ -1,9 +1,9 @@
 { pkgs, config, ... }:
 
 {
-  home.packages = with pkgs; [
-    poetry
-  ];
+  # home.packages = with pkgs; [
+  #   poetry
+  # ];
 
   sops.secrets.poetry-config = {
     mode = "0440";
