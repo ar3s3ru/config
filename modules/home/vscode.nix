@@ -6,17 +6,8 @@ let
     mktplcRef = {
       publisher = "bufbuild";
       name = "vscode-buf";
-      version = "0.7.0";
-      sha256 = "B5/Gc+f3xaYpMTXFcQ9LJiAb9LBJX2aR+gh22up3Wi4=";
-    };
-  };
-
-  fwcd.kotlin = buildVscodeMarketplaceExtension {
-    mktplcRef = {
-      publisher = "fwcd";
-      name = "kotlin";
-      version = "0.2.36";
-      sha256 = "tCpxFWSQZNhiHdJyxSbQ1QakS2jNqWQrA2/grLZklrM=";
+      version = "0.8.13";
+      sha256 = "sha256-4BTqir/tNKI5YeKKHjsuMwXWCdADJnCIf5o8IYbGTyY=";
     };
   };
 
@@ -29,12 +20,12 @@ let
     };
   };
 
-  keesschollaart.vscode-home-assistant = buildVscodeMarketplaceExtension {
+  drblury.protobuf-vsc = buildVscodeMarketplaceExtension {
     mktplcRef = {
-      publisher = "keesschollaart";
-      name = "vscode-home-assistant";
-      version = "1.43.0";
-      sha256 = "TFn3ZU36aWDmPHjPhIF4ZzD7cU7PeIjVj4vCpqu4kZg=";
+      publisher = "drblury";
+      name = "protobuf-vsc";
+      version = "1.6.0";
+      sha256 = "sha256-HvTJSFRKO0K7Ud9381viPrXp3TInB1FT97qZArosAjY=";
     };
   };
 
@@ -72,7 +63,6 @@ in
     jnoortheen.nix-ide
     mechatroner.rainbow-csv
     rust-lang.rust-analyzer
-    zxh404.vscode-proto3
     yzhang.markdown-all-in-one
     esbenp.prettier-vscode
     bradlc.vscode-tailwindcss
@@ -87,9 +77,8 @@ in
     bazelbuild.vscode-bazel
     ms-vsliveshare.vsliveshare
     # Local derivation modules
-    keesschollaart.vscode-home-assistant
     bufbuild.vscode-buf
-    fwcd.kotlin
+    drblury.protobuf-vsc
     mrmlnc.vscode-json5
     a-h.templ
   ];
