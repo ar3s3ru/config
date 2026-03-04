@@ -9,5 +9,7 @@
     helmfile
   ];
 
-  sops.secrets.kubeconfig.path = "${config.home.homeDirectory}/.kube/config";
+  sops.secrets.kubeconfig.path = "${config.home.homeDirectory}/.kube/config.picnic";
+
+  home.sessionVariables.KUBECONFIG = "${config.home.homeDirectory}/.kube/config:${config.home.homeDirectory}/.kube/config.picnic";
 }
