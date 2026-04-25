@@ -17,6 +17,7 @@ darwin.lib.darwinSystem {
     ../../modules/system/fish.nix
     ../../modules/darwin/machine-default.nix
     ../../modules/darwin/aerospace.nix
+    ../../modules/home/opencode # NOTE: it's installed through Homebrew!
     ./homebrew.nix
     ./docker.nix
     {

@@ -16,9 +16,10 @@
     brews = [
       "awscli@2"
       "poetry"
-      "minikube"
+      "uv"
       "skaffold"
       "k3d"
+      "opencode"
     ];
 
     casks = [

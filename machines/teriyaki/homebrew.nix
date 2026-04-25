@@ -15,6 +15,7 @@
 
     brews = [
       "docker"
+      "opencode"
     ];
 
     casks = [

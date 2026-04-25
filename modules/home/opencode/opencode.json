@@ -1,0 +1,41 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "atlassian": {
+      "type": "remote",
+      "url": "https://mcp.atlassian.com/v1/mcp"
+    },
+    "terraform": {
+      "type": "local",
+      "command": [
+        "docker",
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "TFE_TOKEN={env:OPENCODE_MCP_TERRAFORM_TFE_TOKEN}",
+        "hashicorp/terraform-mcp-server:0.5.1"
+      ]
+    },
+    "datadog": {
+      "type": "remote",
+      "url": "https://mcp.datadoghq.eu/api/unstable/mcp-server/mcp"
+    },
+    "incident-io": {
+      "type": "remote",
+      "url": "https://mcp.incident.io/mcp"
+    },
+    "github": {
+      "type": "remote",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer {env:OPENCODE_MCP_GITHUB_TOKEN}"
+      }
+    },
+    "miro": {
+      "type": "remote",
+      "url": "https://mcp.miro.com/"
+    }
+  },
+  "plugin": ["opencode-add-dir"]
+}
