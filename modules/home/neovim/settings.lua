@@ -14,11 +14,7 @@ augroup END
 autocmd FileType nix setlocal shiftwidth=2
 ]]
 
--- Enable auto-formatting
--- NOTE: some format-on-save is also enabled in null-ls config.
-vim.cmd [[
-autocmd BufWritePre * lua vim.lsp.buf.format()
-]]
+-- NOTE: format-on-save is handled by conform-nvim (see default.nix).
 
 -- Keybinds
 local map = vim.api.nvim_set_keymap

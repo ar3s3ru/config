@@ -21,7 +21,7 @@
 
   imports = [
     inputs.nix-colors.homeManagerModule
-    # ../modules/home/nvim
+    ../modules/home/neovim
     ../modules/home/alacritty.nix
     ../modules/home/direnv.nix
     ../modules/home/fish.nix
