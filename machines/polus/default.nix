@@ -17,7 +17,6 @@ darwin.lib.darwinSystem {
     ../../modules/system/fish.nix
     ../../modules/darwin/machine-default.nix
     ../../modules/darwin/aerospace.nix
-    ../../modules/home/opencode # NOTE: it's installed through Homebrew!
     ./homebrew.nix
     ./docker.nix
     {
@@ -31,7 +30,10 @@ darwin.lib.darwinSystem {
       home-manager.useGlobalPkgs = false;
       home-manager.useUserPackages = true;
       home-manager.users.ar3s3ru = {
-        imports = [ ./user-ar3s3ru.nix ];
+        imports = [
+          ../../modules/home/opencode # NOTE: it's installed through Homebrew!
+          ./user-ar3s3ru.nix
+        ];
 
         # NOTE: if the creation of secrets doesn't work, check
         # the <Program> in `less ~/Library/LaunchAgents/org.nix-community.home.sops-nix.plist`

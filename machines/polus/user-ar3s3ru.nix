@@ -21,7 +21,7 @@ in
 
   home.packages = with pkgs; [
     nodejs
-    nodejs.pkgs.pnpm
+    pnpm
     just # picnic-fca uses that for some projects
     libxml2 # For xmllint
     xmlstarlet

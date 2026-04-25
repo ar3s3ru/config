@@ -17,6 +17,6 @@ in
 
   home.packages = with pkgs; [
     nodejs
-    nodejs.pkgs.pnpm
+    pnpm
   ];
 }

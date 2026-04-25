@@ -29,9 +29,9 @@ with inputs.nix-colors.lib-contrib { inherit pkgs; };
     # Bazel
     buildifier
     # Typescript langauge server.
-    nodePackages.typescript
-    nodePackages.typescript-language-server
-    nodePackages.prettier # Code formatter.
+    typescript
+    typescript-language-server
+    prettier # Code formatter.
   ];
 
   programs.neovim = {
@@ -46,6 +46,7 @@ with inputs.nix-colors.lib-contrib { inherit pkgs; };
     plugins = with pkgs.vimPlugins; [
       # Set theme to nix-colors'.
       {
+        type = "viml";
         plugin = vimThemeFromScheme { scheme = colorscheme; };
         config = ''
           colorscheme nix-${colorscheme.slug}
@@ -66,24 +67,28 @@ with inputs.nix-colors.lib-contrib { inherit pkgs; };
       vim-better-whitespace
       indentLine
       {
+        type = "lua";
         plugin = bufferline-nvim;
         config = ''
           lua require('bufferline').setup{}
         '';
       }
       {
+        type = "lua";
         plugin = lualine-nvim;
         config = ''
           lua require('lualine').setup{}
         '';
       }
       {
+        type = "lua";
         plugin = nvim-tree-lua;
         config = ''
           lua require('nvim-tree').setup()
         '';
       }
       {
+        type = "lua";
         plugin = nvim-treesitter;
         config = ''
           lua << EOF
@@ -97,6 +102,7 @@ with inputs.nix-colors.lib-contrib { inherit pkgs; };
         '';
       }
       {
+        type = "lua";
         plugin = telescope-nvim;
         config = ''
           lua require('telescope').setup()
@@ -105,6 +111,7 @@ with inputs.nix-colors.lib-contrib { inherit pkgs; };
 
       # Language servers and autocompletion.
       {
+        type = "lua";
         plugin = nvim-lspconfig;
         config = ''
           lua << EOF
@@ -169,13 +176,14 @@ with inputs.nix-colors.lib-contrib { inherit pkgs; };
                 -- NOTE: disabling formatting through tsserver, since null-ls will do that instead.
                 client.resolved_capabilities.document_formatting = false
               end,
-              cmd = { "typescript-language-server", "--stdio", "--tsserver-path", "${pkgs.nodePackages.typescript}/bin/tsserver" },
+              cmd = { "typescript-language-server", "--stdio", "--tsserver-path", "${pkgs.typescript}/bin/tsserver" },
             }
           EOF
         '';
       }
       plenary-nvim # Dependency for null-ls.
       {
+        type = "lua";
         plugin = null-ls-nvim;
         config = ''
           lua << EOF
@@ -224,6 +232,7 @@ with inputs.nix-colors.lib-contrib { inherit pkgs; };
       cmp-path
       cmp-emoji
       {
+        type = "lua";
         plugin = nvim-cmp;
         config = ''
           lua << EOF

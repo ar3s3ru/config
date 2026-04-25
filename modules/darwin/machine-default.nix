@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   imports = [
@@ -6,7 +6,7 @@
   ];
 
   system.stateVersion = 4;
-  ids.gids.nixbld = 350;
+  ids.gids.nixbld = lib.mkDefault 350;
 
   time.timeZone = "Europe/Amsterdam";
 

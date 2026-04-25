@@ -21,7 +21,7 @@
 
   imports = [
     inputs.nix-colors.homeManagerModule
-    ../modules/home/nvim
+    # ../modules/home/nvim
     ../modules/home/alacritty.nix
     ../modules/home/direnv.nix
     ../modules/home/fish.nix
@@ -40,7 +40,7 @@
     jq
     yq-go
     mpv
-    neofetch
+    fastfetch
     hugo # For my website.
     grpcurl
     # LaTeX and TexLive

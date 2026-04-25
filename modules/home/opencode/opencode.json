@@ -13,7 +13,7 @@
         "-i",
         "--rm",
         "-e",
-        "TFE_TOKEN={env:OPENCODE_MCP_TERRAFORM_TFE_TOKEN}",
+        "TFE_TOKEN={file:~/.local/share/opencode/terraform-tfe-token}",
         "hashicorp/terraform-mcp-server:0.5.1"
       ]
     },
@@ -29,7 +29,7 @@
       "type": "remote",
       "url": "https://api.githubcopilot.com/mcp/",
       "headers": {
-        "Authorization": "Bearer {env:OPENCODE_MCP_GITHUB_TOKEN}"
+        "Authorization": "Bearer {file:~/.local/share/opencode/github-token}"
       }
     },
     "miro": {
