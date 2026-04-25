@@ -1,4 +1,4 @@
-{ darwin, home-manager, nix-colors, sops-nix, ... }@inputs:
+{ darwin, home-manager, nix-colors, sops-nix, nixvim, ... }@inputs:
 let
   nixpkgs = import inputs.nixpkgs {
     config.allowUnfree = true;
@@ -25,6 +25,7 @@ darwin.lib.darwinSystem {
 
       home-manager.sharedModules = [
         sops-nix.homeManagerModules.sops
+        nixvim.homeModules.nixvim
       ];
 
       home-manager.useGlobalPkgs = false;

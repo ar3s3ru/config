@@ -22,6 +22,8 @@
 
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    nixvim.url = "github:nix-community/nixvim";
   };
 
   outputs = inputs@{ flake-utils, nixpkgs, ... }: {

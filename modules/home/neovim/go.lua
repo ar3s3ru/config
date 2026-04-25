@@ -1,5 +1,3 @@
--- Run gopls' source.organizeImports code action synchronously.
--- Used as a BufWritePre hook for Go files.
 function GoOrganizeImports(wait_ms)
     local clients = vim.lsp.get_clients({ bufnr = 0, name = "gopls" })
     if #clients == 0 then return end
