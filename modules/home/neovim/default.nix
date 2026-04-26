@@ -159,6 +159,37 @@ in
         action.__raw = ''function() vim.diagnostic.open_float() end'';
         options.desc = "Show diagnostic at cursor";
       }
+
+      # Buffer management (window-preserving via snacks.bufdelete)
+      {
+        mode = "n";
+        key = "<leader>bd";
+        action.__raw = ''function() Snacks.bufdelete() end'';
+        options.desc = "Delete buffer (keep window)";
+      }
+      {
+        mode = "n";
+        key = "<leader>bD";
+        action.__raw = ''function() Snacks.bufdelete({ force = true }) end'';
+        options.desc = "Force delete buffer";
+      }
+      {
+        mode = "n";
+        key = "<leader>bo";
+        action.__raw = ''function() Snacks.bufdelete.other() end'';
+        options.desc = "Delete other buffers";
+      }
+      {
+        mode = "n";
+        key = "<leader>bb";
+        action = "<cmd>Telescope buffers<CR>";
+        options.desc = "Pick buffer";
+        options.silent = true;
+      }
+
+      # Buffer cycling (Shift+Arrow); honors bufferline visual order
+      { mode = "n"; key = "<S-Right>"; action = "<cmd>BufferLineCycleNext<CR>"; options.silent = true; options.desc = "Next buffer"; }
+      { mode = "n"; key = "<S-Left>"; action = "<cmd>BufferLineCyclePrev<CR>"; options.silent = true; options.desc = "Previous buffer"; }
     ];
 
     autoGroups.CursorLine = { clear = true; };
@@ -201,11 +232,34 @@ in
       opencode.enable = true;
 
       web-devicons.enable = true;
-      bufferline.enable = true;
       lualine.enable = true;
       nvim-tree.enable = true;
       indent-blankline.enable = true;
       telescope.enable = true;
+
+      bufferline = {
+        enable = true;
+        # Use Snacks.bufdelete so closing a tab via mouse (x button or
+        # right-click) preserves the window/split layout.
+        settings.options = {
+          close_command.__raw = ''function(n) Snacks.bufdelete(n) end'';
+          right_mouse_command.__raw = ''function(n) Snacks.bufdelete(n) end'';
+        };
+      };
+
+      # snacks.nvim - collection of QoL micro-plugins. Note: outer 'enable'
+      # is the nixvim option; inner '<module>.enabled' is the snacks lua opt.
+      snacks = {
+        enable = true;
+        settings = {
+          bufdelete.enabled = true; # delete buffer, keep window/split
+          bigfile.enabled = true; # auto-disable heavy stuff on large files
+          quickfile.enabled = true; # render file before plugins finish loading
+          words.enabled = true; # auto-highlight LSP refs + ]]/[[ jump
+          notifier.enabled = true; # nicer vim.notify with history
+          rename.enabled = true; # LSP-aware file rename
+        };
+      };
 
       treesitter = {
         enable = true;
