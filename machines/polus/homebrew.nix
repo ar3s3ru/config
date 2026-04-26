@@ -19,7 +19,6 @@
       "uv"
       "skaffold"
       "k3d"
-      "opencode"
     ];
 
     casks = [

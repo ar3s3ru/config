@@ -1,6 +1,8 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
+  home.packages = [ pkgs.opencode ];
+
   sops.secrets.opencode-auth-json = {
     mode = "0600";
     format = "json";

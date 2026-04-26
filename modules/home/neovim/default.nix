@@ -56,6 +56,7 @@ in
     globals.mapleader = " ";
 
     opts = {
+      autoread = true;
       lazyredraw = true;
       shell = "fish";
       shadafile = "NONE";
@@ -93,6 +94,71 @@ in
       { mode = "n"; key = "<C-f>"; action = "<cmd>Telescope live_grep<CR>"; options.silent = true; }
       { mode = "n"; key = "<C-p>"; action = "<cmd>Telescope find_files<CR>"; options.silent = true; }
       { mode = "n"; key = "<C-b>"; action = "<cmd>NvimTreeToggle<CR>"; options.silent = true; }
+
+      {
+        mode = [ "n" "x" ];
+        key = "<leader>oa";
+        action.__raw = ''function() require("opencode").ask("@this: ", { submit = true }) end'';
+        options.desc = "Ask opencode";
+      }
+      {
+        mode = [ "n" "x" ];
+        key = "<leader>os";
+        action.__raw = ''function() require("opencode").select() end'';
+        options.desc = "Opencode select action";
+      }
+      {
+        mode = [ "n" "t" ];
+        key = "<leader>ot";
+        action.__raw = ''function() require("opencode").toggle() end'';
+        options.desc = "Toggle opencode";
+      }
+      {
+        mode = "n";
+        key = "<leader>op";
+        action.__raw = ''function() require("opencode").command("session.half.page.up") end'';
+        options.desc = "Opencode scroll up";
+      }
+      {
+        mode = "n";
+        key = "<leader>on";
+        action.__raw = ''function() require("opencode").command("session.half.page.down") end'';
+        options.desc = "Opencode scroll down";
+      }
+      {
+        mode = [ "n" "x" ];
+        key = "go";
+        action.__raw = ''function() return require("opencode").operator("@this ") end'';
+        options.desc = "Send range to opencode";
+        options.expr = true;
+      }
+      {
+        mode = "n";
+        key = "goo";
+        action.__raw = ''function() return require("opencode").operator("@this ") .. "_" end'';
+        options.desc = "Send line to opencode";
+        options.expr = true;
+      }
+
+      # Diagnostic navigation (LSP errors/warnings)
+      {
+        mode = "n";
+        key = "[d";
+        action.__raw = ''function() vim.diagnostic.goto_prev() end'';
+        options.desc = "Previous diagnostic";
+      }
+      {
+        mode = "n";
+        key = "]d";
+        action.__raw = ''function() vim.diagnostic.goto_next() end'';
+        options.desc = "Next diagnostic";
+      }
+      {
+        mode = "n";
+        key = "<leader>cd";
+        action.__raw = ''function() vim.diagnostic.open_float() end'';
+        options.desc = "Show diagnostic at cursor";
+      }
     ];
 
     autoGroups.CursorLine = { clear = true; };
@@ -113,9 +179,27 @@ in
         pattern = "nix";
         command = "setlocal shiftwidth=2";
       }
+      {
+        event = [ "FocusGained" "BufEnter" "CursorHold" "CursorHoldI" ];
+        pattern = "*";
+        command = "if mode() != 'c' | checktime | endif";
+      }
+      {
+        event = "FileChangedShellPost";
+        pattern = "*";
+        command = "echohl WarningMsg | echo 'File changed on disk. Buffer reloaded.' | echohl None";
+      }
     ];
 
+    userCommands = {
+      OpencodeAsk.command.__raw = ''function() require("opencode").ask("@this: ", { submit = true }) end'';
+      OpencodeSelect.command.__raw = ''function() require("opencode").select() end'';
+      OpencodeToggle.command.__raw = ''function() require("opencode").toggle() end'';
+    };
+
     plugins = {
+      opencode.enable = true;
+
       web-devicons.enable = true;
       bufferline.enable = true;
       lualine.enable = true;
@@ -194,13 +278,16 @@ in
             ];
           };
         };
+        # LSP keymaps. Neovim 0.12 ships built-in global maps for most LSP
+        # actions (see :help lsp-defaults), so we only add explicit aliases
+        # for the most universal "go to" shortcuts. Defaults provide:
+        #   K   -> hover            gra -> code_action
+        #   grr -> references       gri -> implementation
+        #   grn -> rename           grt -> type_definition
+        #   gO  -> document_symbol  <C-]> -> definition (via tagfunc)
         keymaps.lspBuf = {
-          "gD" = "declaration";
           "gd" = "definition";
-          "<space>h" = "hover";
-          "td" = "type_definition";
-          "<C-d>" = "references";
-          "<space>ca" = "code_action";
+          "gD" = "declaration";
         };
         onAttach = ''
           if client.name == "ts_ls" then

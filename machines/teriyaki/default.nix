@@ -32,7 +32,7 @@ darwin.lib.darwinSystem {
       home-manager.useUserPackages = true;
       home-manager.users.ar3s3ru = {
         imports = [
-          ../../modules/home/opencode # NOTE: it's installed through Homebrew!
+          ../../modules/home/opencode
           ./user-ar3s3ru.nix
         ];
 
