@@ -258,6 +258,8 @@ in
           words.enabled = true; # auto-highlight LSP refs + ]]/[[ jump
           notifier.enabled = true; # nicer vim.notify with history
           rename.enabled = true; # LSP-aware file rename
+          input.enabled = true;
+          picker.enabled = true;
         };
       };
 
