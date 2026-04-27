@@ -19,6 +19,7 @@ in
     typescript
     typescript-language-server
     prettier
+    buf
   ];
 
   programs.nixvim = {
@@ -190,6 +191,21 @@ in
       # Buffer cycling (Shift+Arrow); honors bufferline visual order
       { mode = "n"; key = "<S-Right>"; action = "<cmd>BufferLineCycleNext<CR>"; options.silent = true; options.desc = "Next buffer"; }
       { mode = "n"; key = "<S-Left>"; action = "<cmd>BufferLineCyclePrev<CR>"; options.silent = true; options.desc = "Previous buffer"; }
+
+      # Protobuf / buf manual actions (auto-format-on-save and auto-lint
+      # are already wired via conform-nvim and nvim-lint).
+      {
+        mode = "n";
+        key = "<leader>pbf";
+        action.__raw = ''function() require("conform").format({ async = true, lsp_format = "fallback" }) end'';
+        options.desc = "buf format (current file)";
+      }
+      {
+        mode = "n";
+        key = "<leader>pbl";
+        action.__raw = ''function() require("lint").try_lint() end'';
+        options.desc = "buf lint (current file)";
+      }
     ];
 
     autoGroups.CursorLine = { clear = true; };
@@ -288,6 +304,7 @@ in
             css = [ "prettier" ];
             markdown = [ "prettier" ];
             toml = [ "prettier" ];
+            proto = [ "buf" ];
           };
           format_on_save = {
             timeout_ms = 1000;
@@ -301,6 +318,7 @@ in
         lintersByFt = {
           sh = [ "shellcheck" ];
           bash = [ "shellcheck" ];
+          proto = [ "buf_lint" ];
         };
         autoCmd.event = [ "BufWritePost" "BufReadPost" "InsertLeave" ];
       };
@@ -309,6 +327,7 @@ in
         enable = true;
         servers = {
           gopls.enable = true;
+          buf_ls.enable = true;
           terraformls.enable = true;
           nixd = {
             enable = true;
