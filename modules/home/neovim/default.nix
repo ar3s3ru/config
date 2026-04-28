@@ -161,6 +161,29 @@ in
         options.desc = "Show diagnostic at cursor";
       }
 
+      {
+        mode = "n";
+        key = "<leader>lr";
+        action.__raw = ''
+          function()
+            local clients = vim.lsp.get_clients({ bufnr = 0 })
+            if #clients == 0 then
+              vim.notify("No LSP clients attached", vim.log.levels.WARN)
+              return
+            end
+            local names = {}
+            for _, c in ipairs(clients) do
+              table.insert(names, c.name)
+              c:stop(true)
+            end
+            -- Re-trigger FileType so configured servers re-attach.
+            vim.cmd("edit")
+            vim.notify("Restarted LSP: " .. table.concat(names, ", "))
+          end
+        '';
+        options.desc = "Restart LSP (current buffer)";
+      }
+
       # Buffer management (window-preserving via snacks.bufdelete)
       {
         mode = "n";
