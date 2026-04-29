@@ -6,7 +6,6 @@
   ];
 
   system.stateVersion = 4;
-  ids.gids.nixbld = lib.mkDefault 350;
 
   time.timeZone = "Europe/Amsterdam";
 

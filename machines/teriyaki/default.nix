@@ -21,7 +21,6 @@ darwin.lib.darwinSystem {
     {
       system.primaryUser = "ar3s3ru";
       sops.defaultSopsFile = ./secrets.yaml;
-      ids.gids.nixbld = 30000;
 
       home-manager.sharedModules = [
         sops-nix.homeManagerModules.sops

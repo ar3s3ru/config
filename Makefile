@@ -44,7 +44,7 @@ system/teriyaki:
 	$(MAKE) darwin host=teriyaki
 
 system/polus:
-	$(MAKE) darwin host=polus
+	$(MAKE) darwin host=MY2Q1G2NH9
 
 # Nix -------------------------------------------------------------------------
 

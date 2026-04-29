@@ -23,6 +23,9 @@ darwin.lib.darwinSystem {
       system.primaryUser = "ar3s3ru";
       sops.defaultSopsFile = ./secrets.yaml;
 
+      # For some reason, this is what this machine uses.
+      ids.gids.nixbld = 350;
+
       home-manager.sharedModules = [
         sops-nix.homeManagerModules.sops
         nixvim.homeModules.nixvim
