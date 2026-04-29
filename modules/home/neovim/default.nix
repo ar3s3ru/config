@@ -272,7 +272,16 @@ in
 
       web-devicons.enable = true;
       lualine.enable = true;
-      nvim-tree.enable = true;
+      nvim-tree = {
+        enable = true;
+        settings = {
+          update_focused_file = {
+            enable = true;
+            update_root = false; # keep tree root stable across buffer jumps
+          };
+          renderer.highlight_opened_files = "name"; # mark all open buffers in tree
+        };
+      };
       indent-blankline.enable = true;
       telescope.enable = true;
 

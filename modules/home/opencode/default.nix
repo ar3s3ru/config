@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  home.packages = [ pkgs.opencode ];
+  home.packages = with pkgs; [ opencode ];
 
   sops.secrets.opencode-auth-json = {
     mode = "0600";
@@ -27,5 +27,11 @@
     executable = false;
     target = ".config/opencode/opencode.json";
     source = ./opencode.json;
+  };
+
+  home.file."opencode-agents-md" = {
+    executable = false;
+    target = ".config/opencode/AGENTS.md";
+    source = ./AGENTS.md;
   };
 }
