@@ -64,9 +64,9 @@ in
       termguicolors = true;
       guifont = "VictorMono Nerd Font:h10";
       undofile = true;
-      smartindent = true;
-      tabstop = 4;
-      shiftwidth = 4;
+      smartindent = false;
+      tabstop = 2;
+      shiftwidth = 2;
       shiftround = true;
       expandtab = true;
       scrolloff = 3;
@@ -243,11 +243,6 @@ in
         event = "WinLeave";
         group = "CursorLine";
         command = "setlocal nocursorline";
-      }
-      {
-        event = "FileType";
-        pattern = "nix";
-        command = "setlocal shiftwidth=2";
       }
       {
         event = [ "FocusGained" "BufEnter" "CursorHold" "CursorHoldI" ];

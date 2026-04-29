@@ -35,6 +35,10 @@
     "miro": {
       "type": "remote",
       "url": "https://mcp.miro.com/"
+    },
+    "notion": {
+      "type": "remote",
+      "url": "https://mcp.notion.com/mcp"
     }
   },
   "plugin": ["opencode-add-dir"]
