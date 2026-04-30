@@ -109,7 +109,7 @@ in
         options.desc = "Opencode select action";
       }
       {
-        mode = [ "n" "t" ];
+        mode = "n";
         key = "<leader>ot";
         action.__raw = ''function() require("opencode").toggle() end'';
         options.desc = "Toggle opencode";
