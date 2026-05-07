@@ -35,6 +35,7 @@ in
       vim-visual-multi
       vim-better-whitespace
       vim-vsnip
+      markdown-preview-nvim
     ];
 
     extraConfigLua = ''
@@ -50,6 +51,10 @@ in
           ["go.work"] = "gowork",
         },
       })
+
+      -- markdown-preview.nvim
+      vim.g.mkdp_auto_close = 0
+      vim.g.mkdp_theme = "dark"
 
       ${goSettings}
     '';
@@ -140,6 +145,11 @@ in
         options.desc = "Send line to opencode";
         options.expr = true;
       }
+
+      # markdown-preview.nvim
+      { mode = "n"; key = "<leader>mp"; action = "<cmd>MarkdownPreview<CR>"; options.desc = "Markdown preview start"; }
+      { mode = "n"; key = "<leader>ms"; action = "<cmd>MarkdownPreviewStop<CR>"; options.desc = "Markdown preview stop"; }
+      { mode = "n"; key = "<leader>mt"; action = "<cmd>MarkdownPreviewToggle<CR>"; options.desc = "Markdown preview toggle"; }
 
       # Diagnostic navigation (LSP errors/warnings)
       {

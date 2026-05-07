@@ -17,7 +17,7 @@ darwin.lib.darwinSystem {
     ../../modules/system/fish.nix
     ../../modules/darwin/machine-default.nix
     ../../modules/darwin/aerospace.nix
-    ./homebrew.nix
+    # ./homebrew.nix # FIXME: https://github.com/Homebrew/brew/issues/22165
     {
       system.primaryUser = "ar3s3ru";
       sops.defaultSopsFile = ./secrets.yaml;
