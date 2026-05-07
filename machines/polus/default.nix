@@ -17,7 +17,7 @@ darwin.lib.darwinSystem {
     ../../modules/system/fish.nix
     ../../modules/darwin/machine-default.nix
     ../../modules/darwin/aerospace.nix
-    # ./homebrew.nix # FIXME: https://github.com/Homebrew/brew/issues/22165
+    ./homebrew.nix
     ./docker.nix
     {
       system.primaryUser = "ar3s3ru";
