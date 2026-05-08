@@ -15,7 +15,9 @@ in
     nixd
     nixpkgs-fmt
     stylua
-    terraform-ls
+    tofu-ls
+    opentofu
+    tflint
     typescript
     typescript-language-server
     prettier
@@ -45,10 +47,12 @@ in
         extension = {
           gotmpl = "gotmpl",
           gowork = "gowork",
-          tfvars = "terraform-vars",
+          tfvars = "terraform-vars";
+          tofuvars = "terraform-vars";
         },
         filename = {
-          ["go.work"] = "gowork",
+          ["go.work"] = "gowork";
+          [".tofu.hcl"] = "terraform";
         },
       })
 
@@ -285,6 +289,7 @@ in
             update_root = false; # keep tree root stable across buffer jumps
           };
           renderer.highlight_opened_files = "name"; # mark all open buffers in tree
+          filters.git_ignore = false; # show gitignored files
         };
       };
       indent-blankline.enable = true;
@@ -342,6 +347,9 @@ in
             markdown = [ "prettier" ];
             toml = [ "prettier" ];
             proto = [ "buf" ];
+            terraform = [ "tofu_fmt" ];
+            "terraform-vars" = [ "tofu_fmt" ];
+            tofu = [ "tofu_fmt" ];
           };
           format_on_save = {
             timeout_ms = 1000;
@@ -356,6 +364,9 @@ in
           sh = [ "shellcheck" ];
           bash = [ "shellcheck" ];
           proto = [ "buf_lint" ];
+          terraform = [ "tflint" ];
+          "terraform-vars" = [ "tflint" ];
+          tofu = [ "tflint" ];
         };
         autoCmd.event = [ "BufWritePost" "BufReadPost" "InsertLeave" ];
       };
@@ -365,7 +376,11 @@ in
         servers = {
           gopls.enable = true;
           buf_ls.enable = true;
-          terraformls.enable = true;
+          terraformls = {
+            enable = true;
+            package = pkgs.tofu-ls;
+            filetypes = [ "terraform" "terraform-vars" "tofu" ];
+          };
           nixd = {
             enable = true;
             settings.formatting.command = [ "nixpkgs-fmt" ];
