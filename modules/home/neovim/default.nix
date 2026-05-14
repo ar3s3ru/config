@@ -289,11 +289,17 @@ in
             update_root = false; # keep tree root stable across buffer jumps
           };
           renderer.highlight_opened_files = "name"; # mark all open buffers in tree
-          filters.git_ignore = false; # show gitignored files
+          filters.git_ignored = false; # show gitignored files
         };
       };
       indent-blankline.enable = true;
-      telescope.enable = true;
+      telescope = {
+        enable = true;
+        settings.pickers = {
+          find_files.follow = true;
+          live_grep.additional_args = [ "-L" ];
+        };
+      };
 
       bufferline = {
         enable = true;
