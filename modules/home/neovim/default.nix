@@ -403,12 +403,13 @@ in
           ts_ls = {
             enable = true;
             filetypes = [ "javascript" "javascriptreact" "typescript" "typescriptreact" ];
-            cmd = [
-              "typescript-language-server"
-              "--stdio"
-              "--tsserver-path"
-              "${pkgs.typescript}/bin/tsserver"
-            ];
+            extraOptions = {
+              init_options = {
+                tsserver = {
+                  path = "${pkgs.typescript}/bin/tsserver";
+                };
+              };
+            };
           };
         };
         # LSP keymaps. Neovim 0.12 ships built-in global maps for most LSP
