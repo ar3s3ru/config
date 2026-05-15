@@ -29,7 +29,6 @@
   outputs = inputs@{ flake-utils, nixpkgs, ... }: {
     darwinConfigurations = {
       teriyaki = import ./machines/teriyaki inputs;
-      MY2Q1G2NH9 = import ./machines/polus inputs;
     };
   } // flake-utils.lib.eachDefaultSystem
     (system:
