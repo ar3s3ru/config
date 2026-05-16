@@ -5,6 +5,8 @@ with inputs.nix-colors.lib-contrib { inherit pkgs; };
 let
   goSettings = builtins.readFile ./go.lua;
   themePlugin = vimThemeFromScheme { scheme = colorscheme; };
+  kotlinLsp = pkgs.callPackage ./kotlin-lsp.nix { };
+  kotlinNvim = pkgs.callPackage ./kotlin-nvim.nix { };
 in
 {
   home.packages = with pkgs; [
@@ -38,6 +40,7 @@ in
       vim-better-whitespace
       vim-vsnip
       markdown-preview-nvim
+      kotlinNvim
     ];
 
     extraConfigLua = ''
@@ -61,6 +64,31 @@ in
       vim.g.mkdp_theme = "dark"
 
       ${goSettings}
+
+      -- kotlin.nvim: point at the Nix-built kotlin-lsp store path.
+      -- $out/share contains both bin/intellij-server and lib/, the layout
+      -- the plugin's resolve_kotlin_lsp_dir() expects.
+      vim.env.KOTLIN_LSP_DIR = "${kotlinLsp}/share"
+
+      require("kotlin").setup({
+        inlay_hints = { enabled = true },
+        jvm_args = { "-Xmx4g" },
+        -- LSP-driven folding off; treesitter folding is also disabled in
+        -- this config, so we rely on default vim folding.
+        folding = { enabled = false },
+      })
+
+      -- Format-on-save for Kotlin via :KotlinFormat (kotlin.nvim wraps the
+      -- server's IDEA-style formatter). conform-nvim has no LSP-command
+      -- formatter, so we hook BufWritePre directly.
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        pattern = "*.kt",
+        callback = function()
+          local clients = vim.lsp.get_clients({ bufnr = 0, name = "kotlin_ls" })
+          if #clients == 0 then return end
+          vim.cmd("KotlinFormat")
+        end,
+      })
     '';
 
     globals.mapleader = " ";
@@ -243,6 +271,14 @@ in
         action.__raw = ''function() require("lint").try_lint() end'';
         options.desc = "buf lint (current file)";
       }
+
+      # Kotlin (kotlin.nvim). Globally bound; commands no-op when no kotlin_ls
+      # client is attached to the current buffer.
+      { mode = "n"; key = "<leader>kf"; action = "<cmd>KotlinFormat<CR>"; options.silent = true; options.desc = "Kotlin format buffer"; }
+      { mode = "n"; key = "<leader>ko"; action = "<cmd>KotlinOrganizeImports<CR>"; options.silent = true; options.desc = "Kotlin organize imports"; }
+      { mode = "n"; key = "<leader>kh"; action = "<cmd>KotlinInlayHintsToggle<CR>"; options.silent = true; options.desc = "Kotlin toggle inlay hints"; }
+      { mode = "n"; key = "<leader>kc"; action = "<cmd>KotlinCodeActions<CR>"; options.silent = true; options.desc = "Kotlin code actions"; }
+      { mode = "n"; key = "<leader>kt"; action = "<cmd>KotlinTypeDefinition<CR>"; options.silent = true; options.desc = "Kotlin go to type definition"; }
     ];
 
     autoGroups.CursorLine = { clear = true; };
@@ -382,13 +418,10 @@ in
         servers = {
           gopls.enable = true;
           buf_ls.enable = true;
-          kotlin_lsp = {
-            enable = true;
-            package = pkgs.callPackage ./kotlin-lsp.nix { };
-            # Don't spawn a JVM for stray .kt files; only attach inside a
-            # project with a Gradle/Maven root marker.
-            extraOptions.single_file_support = false;
-          };
+          # Kotlin LSP is configured via kotlin.nvim (see extraConfigLua),
+          # not via nixvim's plugins.lsp.servers — the plugin spawns its
+          # own `kotlin_ls` client with the workspace/configuration handler
+          # that v262.4739.0+ needs for completion to fully activate.
           terraformls = {
             enable = true;
             package = pkgs.tofu-ls;
