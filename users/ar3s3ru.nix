@@ -8,6 +8,19 @@
   nixpkgs.config.allowUnsupportedSystem = true;
   nixpkgs.config.allowBroken = true;
 
+  # Source: https://github.com/numtide/llm-agents.nix#binary-cache
+  nix.settings = {
+    extra-substituters = [ "https://cache.numtide.com" ];
+    extra-trusted-public-keys = [
+      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+    ];
+  };
+
+  # Use llm-agents for opencode.
+  nixpkgs.overlays = [
+    inputs.llm-agents.overlays.default
+  ];
+
   # FIXME: fish-completions is pulling in Python 2.7 but it breaks the build.
   nixpkgs.config.permittedInsecurePackages = [
     "python-2.7.18.7"

@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  home.packages = with pkgs; [ opencode ];
+  home.packages = [ pkgs.llm-agents.opencode ];
 
   sops.secrets.opencode-auth-json = {
     mode = "0600";

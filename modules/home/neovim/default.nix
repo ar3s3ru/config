@@ -312,6 +312,8 @@ in
       OpencodeToggle.command.__raw = ''function() require("opencode").toggle() end'';
     };
 
+    dependencies.opencode.package = pkgs.llm-agents.opencode;
+
     plugins = {
       opencode.enable = true;
 

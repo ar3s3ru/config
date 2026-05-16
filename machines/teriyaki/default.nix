@@ -1,4 +1,4 @@
-{ darwin, home-manager, nix-colors, sops-nix, nixvim, ... }@inputs:
+{ darwin, home-manager, nix-colors, sops-nix, nixvim, llm-agents, ... }@inputs:
 let
   nixpkgs = import inputs.nixpkgs {
     config.allowUnfree = true;
