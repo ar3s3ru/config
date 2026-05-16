@@ -382,6 +382,13 @@ in
         servers = {
           gopls.enable = true;
           buf_ls.enable = true;
+          kotlin_lsp = {
+            enable = true;
+            package = pkgs.callPackage ./kotlin-lsp.nix { };
+            # Don't spawn a JVM for stray .kt files; only attach inside a
+            # project with a Gradle/Maven root marker.
+            extraOptions.single_file_support = false;
+          };
           terraformls = {
             enable = true;
             package = pkgs.tofu-ls;

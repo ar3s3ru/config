@@ -18,5 +18,6 @@ in
   home.packages = with pkgs; [
     nodejs
     pnpm
+    jdk25
   ];
 }
