@@ -324,7 +324,11 @@ in
             enable = true;
             update_root = false; # keep tree root stable across buffer jumps
           };
-          renderer.highlight_opened_files = "name"; # mark all open buffers in tree
+          renderer = {
+            highlight_opened_files = "name"; # mark all open buffers in tree
+            group_empty = true; # collapse chains of single-child folders (e.g. src/java/main/com/example)
+            indent_markers.enable = true; # show indent guides for clarity with collapsed chains
+          };
           filters.git_ignored = false; # show gitignored files
         };
       };
