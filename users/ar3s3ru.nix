@@ -35,6 +35,7 @@
   imports = [
     inputs.nix-colors.homeManagerModule
     ../modules/home/neovim
+    ../modules/home/homelab
     ../modules/home/alacritty.nix
     ../modules/home/direnv.nix
     ../modules/home/fish.nix
